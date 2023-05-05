@@ -1,0 +1,6 @@
+psycopg2
+Flask
+scikit-learn
+pandas
+numpy
+# -e .
