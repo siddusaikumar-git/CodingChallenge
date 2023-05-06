@@ -20,7 +20,7 @@ class CustomException(Exception):
             error_message, error_detail=error_detail)
 
     def __str__(self):
-        logging.info(self.error_message)
+        logging.error(self.error_message)
         return self.error_message
 
 
@@ -28,5 +28,5 @@ if __name__ == "__main__":
     try:
         a = 1/0
     except Exception as e:
-        logging.info("Divide by zero exception")
+        logging.error("Divide by zero exception")
         raise CustomException(e, sys)
