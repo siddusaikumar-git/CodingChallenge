@@ -7,6 +7,20 @@ This Repository is to generate backend API's of weather data and its statistics 
 1. [Python v3.11](https://www.python.org/downloads/)
 2. [PostgresSQL v15](https://www.postgresql.org/download/)
 
+## Install Dependencies
+
+```bash
+    pip install -r requirements.txt
+```
+
+## Database creation in postgreSQL
+
+create a datbase name "weather" and open the query tool to create the tables as below
+
+## Create Tables
+
+create tables "weatherdata" and "weatherstats" with the below queries.
+
 ```sql
 /* weatherdata table */
 
