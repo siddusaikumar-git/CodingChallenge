@@ -90,3 +90,23 @@ To run the code coverage and check the report, execute the following command
 ```
 
 Then a folder with name "htmlcov" is created, then open "index.html" to see the coverage.
+
+# Deployment to Cloud (AWS)
+
+Below are the high level deployment steps todo for our scenario.
+
+1. Set up a Kubernetes cluster on Amazon Elastic Kubernetes Service (EKS). EKS makes it easy to run Kubernetes on AWS without having to manage the underlying infrastructure.
+
+2. Deploy your API services to the Kubernetes cluster using Kubernetes manifests, which define the desired state of your Kubernetes objects such as pods, services, and deployments.
+
+3. Set up a PostgreSQL database on Amazon Relational Database Service (RDS). RDS makes it easy to run a managed PostgreSQL database on AWS without having to manage the underlying infrastructure.
+
+4. Create a Kubernetes deployment for your PostgreSQL instance using a YAML file that specifies the desired state of the deployment.
+
+5. Configure your API services to connect to the PostgreSQL database using environment variables or Kubernetes secrets to store the database credentials securely.
+
+6. Create a Kubernetes cron job to perform scheduled ingestion of data into the PostgreSQL database. This cron job can run a script or a containerized process that reads data from a source (such as a file or an API endpoint) and inserts it into the database.
+
+7. Set up load balancing and auto-scaling for your API services using Kubernetes features such as Services and Horizontal Pod Autoscaler (HPA).
+
+8. Finally, monitor your Kubernetes cluster and PostgreSQL database using tools such as Prometheus and Grafana to ensure that everything is running smoothly and to troubleshoot any issues that may arise.
