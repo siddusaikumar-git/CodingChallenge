@@ -1,11 +1,12 @@
 from flask import Flask, request
+from config import url_config
 from flask_swagger_ui import get_swaggerui_blueprint
 from flask_cors import CORS
 from src.components.data_analysis import get_weather_stats, get_weather_data
 
 app = Flask(__name__)
 CORS(app)
-
+url_params = url_config()
 
 SWAGGER_URL = '/swagger'
 API_URL = '/static/swagger.json'
@@ -17,6 +18,11 @@ swaggerui_blueprint = get_swaggerui_blueprint(
     }
 )
 app.register_blueprint(swaggerui_blueprint, url_prefix=SWAGGER_URL)
+
+
+@app.route('/', methods=['GET'])
+def stater_url():
+    return f"""<h1>Welcome, Please Click on the <a href="{url_params['url']}/swagger">Swagger API</a> to access APIs</h1> """
 
 
 @app.route('/api/weather', methods=['GET'])

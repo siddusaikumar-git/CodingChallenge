@@ -4,7 +4,7 @@
 
 This Repository is to generate backend API's of weather data and its statistics from Weather Data containing minimum temperature, maximum temperature and precipitation corresponds to a particular weather station from Nebraska, Iowa, Illinois, Indiana, or Ohio from 1985-01-01 to 2014-12-31 with data stretching over 1.7 Million records, Hence the task is to query the Weather data and statistics corresponding to weather station and year.
 
-## Pre-requisites
+# Pre-requisites
 
 1. [Python v3.11](https://www.python.org/downloads/)
 2. [PostgresSQL v15](https://www.postgresql.org/download/)
@@ -49,3 +49,14 @@ CREATE TABLE weatherstats (
     totalprecipitation REAL
     );
 ```
+
+# Execution
+
+Now once all the [pre-requisites](#Pre-requisites) installed, open in your favorite code editor and in the root folder, run the following command.
+
+```bash
+    python app.py
+```
+
+Now in the code you will see the app is running in development mode and able to listen to default localhost and port of Flask API [localhost link](http://localhost:5000/), you will see the link to access swagger API.
+else goto link [Swagger API](http://localhost:5000/swagger)
