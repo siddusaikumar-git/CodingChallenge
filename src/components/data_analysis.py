@@ -4,6 +4,10 @@ from config import page_config, url_config
 from src.exception import CustomException
 from src.logger import logging
 
+"""
+    This function is used to generate "prevLink" and "nextLink" based on page number and total record count
+"""
+
 
 def generate_links(page_no, total_records_count, link):
     try:
@@ -31,6 +35,12 @@ def generate_links(page_no, total_records_count, link):
         raise CustomException(error, sys)
 
 
+"""
+    This function is to insert input request to weatherstats table in weather dababase with the help of 
+    insert_weather_stats_to_db function from data_modeling.py file
+"""
+
+
 def insert_weather_stats_results(results):
     try:
         for result in results:
@@ -44,6 +54,12 @@ def insert_weather_stats_results(results):
                 stationid=stationid, year=year, total_precipitation=total_precipitation, avg_maxtemp=avg_maxtemp, avg_mintemp=avg_mintemp)
     except Exception as error:
         raise CustomException(error, sys)
+
+
+"""
+    This function is get weather statistics from the weatherdata table in weather dababase based on input query params with the help of 
+    get_weather_stats_from_db function from data_modeling.py file
+"""
 
 
 def get_weather_stats(params):
@@ -79,6 +95,12 @@ def get_weather_stats(params):
         return result
     except Exception as error:
         raise CustomException(error, sys)
+
+
+"""
+    This function is get weather data from the weatherdata table in weather dababase based on input query params with the help of 
+    get_weather_data_from_db function from data_modeling.py file
+"""
 
 
 def get_weather_data(params):

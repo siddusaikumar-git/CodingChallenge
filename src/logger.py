@@ -8,7 +8,7 @@ os.makedirs(logs_path, exist_ok=True)
 
 LOG_FILE_PATH = os.path.join(logs_path, LOG_FILE)
 
-
+# This logger function adds files to log path in mentioned format, which supports (info, error, warning)
 logging.basicConfig(
     filename=LOG_FILE_PATH,
     format="[ %(asctime)s ] {%(filename)s:%(lineno)d} %(name)s - %(levelname)s - %(message)s",

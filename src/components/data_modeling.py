@@ -7,6 +7,14 @@ from src.exception import CustomException
 from src.logger import logging
 
 
+""""
+This function is to insert data to weatherdata table in weather database when the insert_data_from_file_to_db function  
+is triggered from data_ingestion.py file.
+
+It inserts all records from a weather station as all in one transaction.
+"""
+
+
 def insertMany(data):
     conn = None
     try:
@@ -23,6 +31,13 @@ def insertMany(data):
         if conn is not None:
             curr.close()
             conn.close()
+
+
+""""
+This function is to validate the stationid present in weatherdata table from weather database when the data ingestion function is triggered.
+
+It returns the output as boolean
+"""
 
 
 def validate_station_data(stationid):
@@ -42,6 +57,13 @@ def validate_station_data(stationid):
         if conn is not None:
             curr.close()
             conn.close()
+
+
+""""
+This function is to get weather statistics to weatherdata table from weather database when the /api/weather/stats api is called.
+
+It returns the data as output in two columns {total_count(INTEGER), results(JSON Array Object)}, for more details refer /swagger api
+"""
 
 
 def get_weather_stats_from_db(stationid=None, year=None, page=1):
@@ -104,6 +126,13 @@ def get_weather_stats_from_db(stationid=None, year=None, page=1):
         if conn is not None:
             curr.close()
             conn.close()
+
+
+""""
+This function is to get weather data to weatherdata table from weather database when the /api/weather api is called.
+
+It returns the data as output in two columns {total_count(INTEGER), results(JSON Array Object)}, for more details refer /swagger api
+"""
 
 
 def get_weather_data_from_db(stationid=None, year=None, page=1):
@@ -169,6 +198,13 @@ def get_weather_data_from_db(stationid=None, year=None, page=1):
         if conn is not None:
             curr.close()
             conn.close()
+
+
+""""
+This function is to insert data to weatherstats table in weather database when the /api/weather/stats api is called.
+
+It checks if data is already present in database, if not present then it will perform insertion operation.
+"""
 
 
 def insert_weather_stats_to_db(stationid=None, year=None, total_precipitation=None, avg_maxtemp=None, avg_mintemp=None):

@@ -17,6 +17,10 @@ class DataIngestion:
     def __init__(self):
         self.filelocation = DataIngestionConfig().file_location
 
+    """
+        clean each line to list and convert the data to required datatype
+    """
+
     def clean_row_data(self, line):
         try:
             rowData = [int(col.strip()) for col in line.split("\t")]
@@ -27,6 +31,13 @@ class DataIngestion:
             return rowData
         except Exception as error:
             raise CustomException(error, sys)
+
+    """
+        This function is to insert data from text files (weather station) into database.
+
+        It first perform clean operation with "clean_row_data" function, then will insert data to database
+        by calling "insertMany" function from data_modeling.py file.
+    """
 
     def insert_data_from_file_to_db(self, filename, stationid):
         try:
@@ -52,6 +63,12 @@ class DataIngestion:
             #     f"Data from station {stationid} is ingested with {numberOfRecords} records in {numberOfSeconds:.2f} seconds into database successfully with start time {time.asctime(time.localtime(start_time))} and end time {time.asctime(time.localtime(end_time))}")
         except (Exception) as error:
             raise CustomException(error, sys)
+
+    """
+        This function is to insert data from text files (weather station) into database.
+
+        It will validate whether data is already present in database, if not present then will call insert_data_from_file_to_db function.
+    """
 
     def insert_files_to_db(self):
         try:

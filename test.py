@@ -31,24 +31,32 @@ class UnitTest(unittest.TestCase):
         output = json.loads(result.data)
         self.assertEqual(output["results"], None)
 
+    # This method tests the GET request to the endpoint "/api/weather?year=1900".
     def test_weather_data_4(self):
         result = self.app.get(
             "/api/weather?year=2000&stationid=USC00110072&page=1")
         output = json.loads(result.data)
-        self.assertEqual(output["total_count"], 366)
+        with self.subTest():
+            self.assertEqual(output["total_count"], 366)
+        with self.subTest():
+            self.assertEqual(not output["prevLink"], True)
+        with self.subTest():
+            self.assertEqual(not output["nextLink"], False)
 
+    # This method tests the GET request to the endpoint "/api/weather/stats?year=1900
+    # for "total_count", "nextLink" and "prevLink".
     def test_weather_data_5(self):
         result = self.app.get(
             "/api/weather?year=2000&stationid=USC00110072&page=2")
         output = json.loads(result.data)
-        self.assertEqual(output["total_count"], 366)
+        with self.subTest():
+            self.assertEqual(output["total_count"], 366)
+        with self.subTest():
+            self.assertEqual(not output["prevLink"], False)
+        with self.subTest():
+            self.assertEqual(not output["nextLink"], False)
 
-    def test_weather_data_6(self):
-        result = self.app.get(
-            "/api/weather?year=2000&stationid=USC00110072&page=38")
-        output = json.loads(result.data)
-        self.assertEqual(output["results"], None)
-
+    # This method test the None data output if number of pages provided is more than present
     def test_weather_data_6(self):
         result = self.app.get(
             "/api/weather?year=2000&stationid=USC00110072&page=38")
@@ -72,14 +80,26 @@ class UnitTest(unittest.TestCase):
         result = self.app.get(
             "/api/weather/stats?year=2000&stationid=USC00113879&page=1")
         output = json.loads(result.data)
-        self.assertEqual(output['total_count'], 1)
+        with self.subTest():
+            self.assertEqual(output['total_count'], 1)
+        with self.subTest():
+            self.assertEqual(not output["prevLink"], True)
+        with self.subTest():
+            self.assertEqual(not output["nextLink"], False)
 
+    # This method the "total_count", "prevLink" and "nextLink" is not None
     def test_weather_stats_4(self):
         result = self.app.get(
             "/api/weather/stats?year=2000&page=2")
         output = json.loads(result.data)
-        self.assertEqual(output['total_count'], 166)
+        with self.subTest():
+            self.assertEqual(output['total_count'], 166)
+        with self.subTest():
+            self.assertEqual(not output["prevLink"], False)
+        with self.subTest():
+            self.assertEqual(not output["nextLink"], False)
 
+    # This method test the None data output if number of pages provided is more than present
     def test_weather_stats_5(self):
         result = self.app.get(
             "/api/weather/stats?year=2000&page=18")
@@ -88,6 +108,7 @@ class UnitTest(unittest.TestCase):
 
     # ----------- Insertion weather data to database --------------
 
+    # This method test the ingestion of all data files to postgres database
     def test_ingestion_files_to_db(self):
         di = DataIngestion()
         response = di.insert_files_to_db()

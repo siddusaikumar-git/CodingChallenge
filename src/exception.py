@@ -12,6 +12,7 @@ def error_message_details(error, error_detail: sys):
     return error_message
 
 
+# this is the main exception class that is used as custom exception, helps to trace back the error with sys trace.
 class CustomException(Exception):
 
     def __init__(self, error_message, error_detail: sys):

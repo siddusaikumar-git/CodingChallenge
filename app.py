@@ -17,12 +17,18 @@ swaggerui_blueprint = get_swaggerui_blueprint(
         'app_name': 'My API'
     }
 )
+
+# function to generate swagger ui from template
 app.register_blueprint(swaggerui_blueprint, url_prefix=SWAGGER_URL)
 
 
+# base url
 @app.route('/', methods=['GET'])
 def stater_url():
     return f"""<h1>Welcome, Please Click on the <a href="{url_params['url']}/swagger">Swagger API</a> to access APIs</h1> """
+
+
+# This api is used to fetch weather data, for more details refer swagger ui
 
 
 @app.route('/api/weather', methods=['GET'])
@@ -36,6 +42,9 @@ def weather_data():
         params_dict["page"] = request.args.get('page')
     response = get_weather_data(params_dict)
     return response
+
+
+# This api is used to fetch weather statistics, for more details refer swagger ui
 
 
 @app.route('/api/weather/stats', methods=['GET'])
