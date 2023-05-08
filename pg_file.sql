@@ -13,23 +13,23 @@
 
 /* weatherstats table */
 
-DROP TABLE weatherstats;
+-- DROP TABLE weatherstats;
 
-CREATE TABLE weatherstats (
-    stationid VARCHAR(20) NOT NULL,
-    year INTEGER NOT NULL,
-    avgmaxtemp REAL,
-    avgmintemp REAL,
-    totalprecipitation REAL
-    );
+-- CREATE TABLE weatherstats (
+--     stationid VARCHAR(20) NOT NULL,
+--     year INTEGER NOT NULL,
+--     avgmaxtemp REAL,
+--     avgmintemp REAL,
+--     totalprecipitation REAL
+--     );
 
-INSERT INTO weatherstats (stationid, year, avgmaxtemp, avgmintemp, totalprecipitation) 
-SELECT 'USC00114442', 2000, 17.66, 4.86, 92
-WHERE NOT EXISTS ( 
-	SELECT stationid FROM weatherstats WHERE stationid = 'USC00114442' and year = 2000 and avgmaxtemp = 17.66 and avgmintemp = 4.86 and totalprecipitation = 92);
+-- INSERT INTO weatherstats (stationid, year, avgmaxtemp, avgmintemp, totalprecipitation) 
+-- SELECT 'USC00114442', 2000, 17.66, 4.86, 92
+-- WHERE NOT EXISTS ( 
+-- 	SELECT stationid, year FROM weatherstats WHERE stationid = 'USC00114442' and year = 2000 and avgmaxtemp = 17.66 and avgmintemp = 4.86 and totalprecipitation = 92);
 
 
-select * from weatherstats;
+-- select * from weatherstats;
 
 -- select * from weatherdata;
 

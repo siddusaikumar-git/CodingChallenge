@@ -52,6 +52,27 @@ CREATE TABLE weatherstats (
     );
 ```
 
+## Environment variables
+
+Create a "config.ini" file, in the root folder and add the below configurations
+
+```config
+
+[postgresql]
+host=<host name>             // default is "localhost"
+database=<database name>     // default is "weather"
+user=<postgres username>     // default is "postgres"
+password=<postgres password>
+
+
+[pageconfig]
+page_count=<page count>      // default is "10"
+
+[urlconfig]
+url=<base url>               // default is "http://127.0.0.1:5000"
+
+```
+
 # Execution
 
 ## Accessing APIs
