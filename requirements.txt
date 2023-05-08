@@ -1,6 +1,7 @@
 psycopg2
 Flask
 Flask-RESTful
+Flask-Cors
 Flask-Swagger
 flask-swagger-ui
 scikit-learn
