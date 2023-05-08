@@ -73,6 +73,8 @@ To run unit tests, execute the following command
     python test.py
 ```
 
+![Screenshot](./images/unit-test-1.jpg)
+
 ## Code Coverage
 
 To run the code coverage and check the report, execute the following command
@@ -89,7 +91,9 @@ To run the code coverage and check the report, execute the following command
     coverage html
 ```
 
-Then a folder with name "htmlcov" is created, then open "index.html" to see the coverage.
+Then a folder with name "htmlcov" is created, then open "index.html" to see the coverage, below is the result screenshot for the same.
+
+![Screenshot](./images/coverage-1.jpg)
 
 # Deployment to Cloud (AWS)
 
