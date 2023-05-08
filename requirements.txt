@@ -1,6 +1,10 @@
 psycopg2
 Flask
+Flask-RESTful
+Flask-Swagger
+flask-swagger-ui
 scikit-learn
 pandas
 numpy
+coverage
 # -e .

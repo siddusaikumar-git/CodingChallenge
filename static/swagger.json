@@ -1,0 +1,296 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Weather Data API",
+    "description": "This is a Weather Database server containing minimum temperature, maximum temparture and percipitation corresponds to a particular weather station from Nebraska, Iowa, Illinois, Indiana, or Ohio from 1985-01-01 to 2014-12-31 with data stretcing over 1.7 Million records, Hence the task is to query the Weather data and statistics corresponding to weather station and year.\n\n\nSome useful links:\n- [The Weather Data repository](https://github.com/corteva/code-challenge-template)\n- [Project Completion repository](https://github.com/siddusaikumar-git/CodingChallenge)",
+    "contact": {
+      "email": "siddusaikumar2017@gmail.com"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://127.0.0.1:5000/api",
+      "variables": {}
+    }
+  ],
+  "paths": {
+    "/weather/stats": {
+      "get": {
+        "tags": ["Weather"],
+        "summary": "weather stats",
+        "operationId": "weatherstats",
+        "parameters": [
+          {
+            "name": "year",
+            "in": "query",
+            "description": "provides average data metrics of weather statistics in this year across weather stations.",
+            "style": "form",
+            "required": false,
+            "explode": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "example": 1985
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "each page by default contains 10 records",
+            "style": "form",
+            "required": false,
+            "explode": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "example": 1
+            }
+          },
+          {
+            "name": "stationid",
+            "in": "query",
+            "description": "provides average data metrics of weather statistics in this year across weather stations.",
+            "style": "form",
+            "required": false,
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "example": "USC00110072"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WeatherStats"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "Weather Stats Data not found"
+          }
+        },
+        "deprecated": false,
+        "security": [],
+        "servers": [
+          {
+            "url": "http://127.0.0.1:5000/api",
+            "variables": {}
+          }
+        ]
+      }
+    },
+    "/weather": {
+      "get": {
+        "tags": ["Weather"],
+        "summary": "weather",
+        "operationId": "weather",
+        "parameters": [
+          {
+            "name": "year",
+            "in": "query",
+            "description": "provides weather data across in this year",
+            "style": "form",
+            "required": false,
+            "explode": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "example": 1985
+            }
+          },
+          {
+            "name": "stationid",
+            "in": "query",
+            "description": "provides weather data in this weather station",
+            "style": "form",
+            "required": false,
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "example": "USC00110072"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "each page by default contains 10 records",
+            "style": "form",
+            "required": false,
+            "explode": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "example": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Weather"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "Weather Data not found"
+          }
+        },
+        "deprecated": false,
+        "security": [],
+        "servers": [
+          {
+            "url": "http://127.0.0.1:5000/api",
+            "variables": {}
+          }
+        ]
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Weather",
+      "description": ""
+    }
+  ],
+  "components": {
+    "schemas": {
+      "WeatherArrayObject": {
+        "type": "object",
+        "properties": {
+          "maxtemp": {
+            "type": "number",
+            "example": -12,
+            "description": "in degrees Celsius"
+          },
+          "mintemp": {
+            "type": "number",
+            "example": -21,
+            "description": "in degrees Celsius"
+          },
+          "stationid": {
+            "type": "string",
+            "example": "USC00110072"
+          },
+          "precipitation": {
+            "type": "number",
+            "example": 0,
+            "description": "in centimeters"
+          },
+          "year": {
+            "type": "integer",
+            "example": 1985
+          },
+          "date": {
+            "type": "string",
+            "format": "date",
+            "example": "1985-01-02"
+          }
+        }
+      },
+      "Weather": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Successfully retrieved the results"
+          },
+          "prevLink": {
+            "type": "string",
+            "example": "http://127.0.0.1:5000/api/weather?year=1985&page=2"
+          },
+          "nextLink": {
+            "type": "string",
+            "example": "http://127.0.0.1:5000/api/weather?year=1985&page=4"
+          },
+          "total_count": {
+            "type": "integer",
+            "format": "int64",
+            "example": 58561
+          },
+          "results": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WeatherArrayObject"
+            }
+          }
+        }
+      },
+      "WeatherStatsArrayObject": {
+        "type": "object",
+        "properties": {
+          "avg_maxtemp": {
+            "type": "number",
+            "example": 15.33,
+            "description": "in degrees Celsius"
+          },
+          "avg_mintemp": {
+            "type": "number",
+            "example": 4.33,
+            "description": "in degrees Celsius"
+          },
+          "stationid": {
+            "type": "string",
+            "example": "USC00110072"
+          },
+          "total_precipitation": {
+            "type": "number",
+            "example": 78
+          },
+          "year": {
+            "type": "integer",
+            "example": 1985,
+            "description": "in centimeters"
+          }
+        }
+      },
+      "WeatherStats": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Successfully retrieved the results"
+          },
+          "prevLink": {
+            "type": "string",
+            "example": "http://127.0.0.1:5000/api/weather/stats?stationid=USC00110072&page=2"
+          },
+          "nextLink": {
+            "type": "string",
+            "example": "http://127.0.0.1:5000/api/weather/stats?stationid=USC00110072&page=4"
+          },
+          "total_count": {
+            "type": "integer",
+            "format": "int32",
+            "example": 30
+          },
+          "results": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WeatherStatsArrayObject"
+            }
+          }
+        }
+      }
+    }
+  }
+}
