@@ -1,11 +1,11 @@
 import psycopg2
 import sys
-import json
-
-from config import db_config, page_config
+import os
+from dotenv import load_dotenv
 from src.exception import CustomException
 from src.logger import logging
 
+load_dotenv()
 
 """"
 This function is to insert data to weatherdata table in weather database when the insert_data_from_file_to_db function  
@@ -13,13 +13,18 @@ is triggered from data_ingestion.py file.
 
 It inserts all records from a weather station as all in one transaction.
 """
+host = os.getenv('HOST')
+database = os.getenv('DATABASE')
+user = os.getenv('USER')
+password = os.getenv('PASSWORD')
+page_count = os.getenv('PAGE_COUNT')
 
 
 def insertMany(data):
     conn = None
     try:
-        params = db_config()
-        conn = psycopg2.connect(**params)
+        conn = psycopg2.connect(
+            host=host, database=database, user=user, password=password)
         curr = conn.cursor()
         query = 'INSERT INTO weatherdata (stationid, date, year, maxtemp, mintemp, precipitation) VALUES(%s, %s, %s, %s, %s, %s)'
         curr.executemany(query, data)
@@ -43,8 +48,8 @@ It returns the output as boolean
 def validate_station_data(stationid):
     conn = None
     try:
-        params = db_config()
-        conn = psycopg2.connect(**params)
+        conn = psycopg2.connect(
+            host=host, database=database, user=user, password=password)
         curr = conn.cursor()
         query = 'SELECT exists (SELECT 1 FROM weatherdata WHERE stationid = %s LIMIT 1)'
         curr.execute(query, (stationid, ))
@@ -69,7 +74,6 @@ It returns the data as output in two columns {total_count(INTEGER), results(JSON
 def get_weather_stats_from_db(stationid=None, year=None, page=1):
     conn = None
     try:
-        page_params = page_config()
         query_filter_keys = []
         query_filter_values = {}
 
@@ -81,10 +85,10 @@ def get_weather_stats_from_db(stationid=None, year=None, page=1):
             query_filter_values["year"] = year
 
         filter_query = " and ".join(query_filter_keys)
-        query_limit = int(page_params["page_count"])
+        query_limit = int(page_count)
         query_offset = query_limit * (int(page) - 1)
-        params = db_config()
-        conn = psycopg2.connect(**params)
+        conn = psycopg2.connect(
+            host=host, database=database, user=user, password=password)
         curr = conn.cursor()
         if query_filter_keys:
             query = f"""
@@ -138,7 +142,6 @@ It returns the data as output in two columns {total_count(INTEGER), results(JSON
 def get_weather_data_from_db(stationid=None, year=None, page=1):
     conn = None
     try:
-        page_params = page_config()
         query_filter_keys = []
         query_filter_values = {}
 
@@ -150,10 +153,10 @@ def get_weather_data_from_db(stationid=None, year=None, page=1):
             query_filter_values["year"] = year
 
         filter_query = " and ".join(query_filter_keys)
-        query_limit = int(page_params["page_count"])
+        query_limit = int(page_count)
         query_offset = query_limit * (int(page) - 1)
-        params = db_config()
-        conn = psycopg2.connect(**params)
+        conn = psycopg2.connect(
+            host=host, database=database, user=user, password=password)
         curr = conn.cursor()
         if query_filter_keys:
             query = f"""
@@ -237,8 +240,8 @@ def insert_weather_stats_to_db(stationid=None, year=None, total_precipitation=No
 
         filter_query = " and ".join(query_filter_keys)
         insert_query = ", ".join(insert_keys)
-        params = db_config()
-        conn = psycopg2.connect(**params)
+        conn = psycopg2.connect(
+            host=host, database=database, user=user, password=password)
         curr = conn.cursor()
 
         query = f""" 
@@ -254,6 +257,29 @@ def insert_weather_stats_to_db(stationid=None, year=None, total_precipitation=No
         conn.commit()
         logging.info(
             f'Inserted/Updated data into Weather stats database successfully for stationid {stationid} and year {year}')
+    except (Exception, psycopg2.DatabaseError) as e:
+        raise CustomException(e, sys)
+    finally:
+        if conn is not None:
+            curr.close()
+            conn.close()
+
+
+def get_data_for_ml_model():
+    conn = None
+    response = {}
+    try:
+        conn = psycopg2.connect(
+            host=host, database=database, user=user, password=password)
+        curr = conn.cursor()
+        query = 'SELECT * from weatherdata order by stationid, year, date'
+        curr.execute(query)
+        rows = curr.fetchall()
+        columns = [desc[0] for desc in curr.description]
+        response["rows"] = rows
+        response["columns"] = columns
+        logging.info('Accessed data for ml model ')
+        return response
     except (Exception, psycopg2.DatabaseError) as e:
         raise CustomException(e, sys)
     finally:

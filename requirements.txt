@@ -1,9 +1,12 @@
 psycopg2
+python-dotenv
 Flask
 Flask-RESTful
 Flask-Cors
 Flask-Swagger
 flask-swagger-ui
+matplotlib
+openai
 scikit-learn
 pandas
 numpy

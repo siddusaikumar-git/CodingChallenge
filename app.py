@@ -1,12 +1,15 @@
+import os
 from flask import Flask, request
-from config import url_config
+from dotenv import load_dotenv
+
 from flask_swagger_ui import get_swaggerui_blueprint
 from flask_cors import CORS
 from src.components.data_analysis import get_weather_stats, get_weather_data
 
+
 app = Flask(__name__)
 CORS(app)
-url_params = url_config()
+load_dotenv()
 
 SWAGGER_URL = '/swagger'
 API_URL = '/static/swagger.json'
@@ -22,10 +25,15 @@ swaggerui_blueprint = get_swaggerui_blueprint(
 app.register_blueprint(swaggerui_blueprint, url_prefix=SWAGGER_URL)
 
 
+host = os.getenv('DEV_HOST')
+port = os.getenv('DEV_PORT')
+
 # base url
+
+
 @app.route('/', methods=['GET'])
 def stater_url():
-    return f"""<h1>Welcome, Please Click on the <a href="{url_params['url']}/swagger">Swagger API</a> to access APIs</h1> """
+    return f"""<h1>Welcome, Please Click on the <a href="http://{host}:{port}/swagger">Swagger API</a> to access APIs</h1> """
 
 
 # This api is used to fetch weather data, for more details refer swagger ui
@@ -61,4 +69,4 @@ def weather_stats():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host=host, port=port)

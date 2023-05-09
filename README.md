@@ -54,30 +54,38 @@ CREATE TABLE weatherstats (
 
 ## Environment variables
 
-Create a "config.ini" file, in the root folder and add the below configurations
+Create a ".env" file, in the root folder and add the below configurations
 
-```config
+```env
 
-[postgresql]
-host=<host name>             // default is "localhost"
-database=<database name>     // default is "weather"
-user=<postgres username>     // default is "postgres"
-password=<postgres password>
+HOST=<host name>            // default is "localhost"
+DATABASE=<database name>    // default is "weather"
+USER=<user name>            // default is "postgres"
+PASSWORD=<password>
 
 
-[pageconfig]
-page_count=<page count>      // default is "10"
+PAGE_COUNT=<page count>     // default is "10"
 
-[urlconfig]
-url=<base url>               // default is "http://127.0.0.1:5000"
+DEV_HOST=<url host>         // default is 127.0.0.1
+DEV_PORT=<url port>         // default is 5000
 
 ```
 
 # Execution
 
-## Accessing APIs
+## Data Ingestion
 
 Now once all the [pre-requisites](#Pre-requisites) installed, open in your favorite code editor and in the root folder, run the following command.
+
+```bash
+    python main.py
+```
+
+This command executes code to perform data ingestion to postgres database into respective tables created above.
+
+## Accessing APIs
+
+Now once data ingestion is done, we are good to access api's, do start flask service run the below command.
 
 ```bash
     python app.py
