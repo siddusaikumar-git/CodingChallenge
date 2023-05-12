@@ -46,6 +46,7 @@ function InputRequest() {
 
   const onToggleHandler = () => {
     setWeatherStats(!weatherStats);
+    setResponseData(null);
   };
   const onSubmitHandler = async () => {
     if (enteredYearIsValid || enteredStationIdIsValid) {

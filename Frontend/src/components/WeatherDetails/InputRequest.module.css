@@ -77,12 +77,16 @@
   display: grid;
   justify-content: space-between;
   align-items: center;
+  /* grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr; */
 }
 .prevLink {
   justify-self: flex-start;
+  grid-row: 1/2;
 }
 .nextLink {
   justify-self: flex-end;
+  grid-row: 1/2;
 }
 
 .pageNumber {
