@@ -1,0 +1,122 @@
+.item {
+  width: 100%;
+  align-items: center;
+  gap: 2rem;
+  padding: 1rem;
+}
+
+.content {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  /* align-items: center; */
+  gap: 1rem;
+}
+
+.content .label {
+  justify-self: flex-end;
+}
+.content .value {
+  justify-self: flex-start;
+}
+
+.image img {
+  width: 10rem;
+}
+
+.abstract {
+  --max-lines: 2;
+  --line-height: 1.2;
+  max-height: calc(var(--max-lines) * 1em * var(--line-height));
+  line-height: var(--line-height);
+  overflow: hidden;
+  position: relative;
+
+  /* display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: var(--max-lines); */
+}
+
+.abstract:has(+ .expand_btn:not(:checked))::before {
+  content: "";
+  position: absolute;
+  height: calc(2em * var(--line-height));
+  width: 100%;
+  bottom: 0;
+  pointer-events: none;
+  background: linear-gradient(to bottom, transparent, white);
+}
+.abstractContent {
+  position: relative;
+  text-align: left;
+}
+
+.expand_btn {
+  position: absolute;
+  appearance: none;
+  bottom: 0;
+  right: 0;
+  cursor: pointer;
+}
+
+.expand_btn::before {
+  content: "...";
+  font-style: bold;
+  font-size: 175%;
+}
+
+.expand_btn:checked::before {
+  content: "Collapse";
+  border: 1px solid black;
+  padding: 0.25rem;
+  border-radius: 0.25em;
+  cursor: pointer;
+  font-style: normal;
+  font-size: 100%;
+}
+
+.expand_btn:hover {
+  background-color: #ccc;
+}
+
+.abstract:has(+ .expand_btn:checked) {
+  max-height: none;
+}
+
+.list {
+  list-style-type: none;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  text-align: left;
+}
+
+.button {
+  font: inherit;
+  cursor: pointer;
+  color: #77002e;
+  border: 1px solid #77002e;
+  background-color: transparent;
+  padding: 0.5rem 1.5rem;
+  border-radius: 4px;
+}
+
+.button:hover,
+.button:active {
+  background-color: #ffe2ed;
+}
+
+.keywordAction {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pdf_link {
+  grid-column: 2 / 3;
+  justify-self: flex-end;
+}
+
+.title {
+  text-align: left;
+}

@@ -30,7 +30,6 @@ port = os.getenv('DEV_PORT')
 
 # base url
 
-
 @app.route('/', methods=['GET'])
 def stater_url():
     return f"""<h1>Welcome, Please Click on the <a href="http://{host}:{port}/swagger">Swagger API</a> to access APIs</h1> """

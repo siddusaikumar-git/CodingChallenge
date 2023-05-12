@@ -10,8 +10,8 @@ load_dotenv()
 
 
 page_count = os.getenv('PAGE_COUNT')
-host = os.getenv('HOST')
-port = os.getenv('PORT')
+host = os.getenv('DEV_HOST')
+port = os.getenv('DEV_PORT')
 
 """
     This function is used to generate "prevLink" and "nextLink" based on page number and total record count

@@ -145,3 +145,24 @@ Below are the high level deployment steps todo for our scenario.
 7. Set up load balancing and auto-scaling for your API services using Kubernetes features such as Services and Horizontal Pod Autoscaler (HPA).
 
 8. Finally, monitor your Kubernetes cluster and PostgreSQL database using tools such as Prometheus and Grafana to ensure that everything is running smoothly and to troubleshoot any issues that may arise.
+
+# Frontend (web application)
+
+## Install Dependencies
+
+```bash
+
+    cd Frontend
+
+    npm install
+```
+
+## Execution
+
+```bash
+
+npm run dev
+
+```
+
+Once setup is done and ran the development script, open the link [http://localhost:5000](http://localhost:5000)
